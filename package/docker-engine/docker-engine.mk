@@ -4,8 +4,12 @@
 #
 ################################################################################
 
-DOCKER_ENGINE_VERSION = v18.09.0
-DOCKER_ENGINE_SITE = $(call github,docker,engine,$(DOCKER_ENGINE_VERSION))
+DOCKER_ENGINE_VERSION = 1.10.3
+DOCKER_ENGINE_GITCOMMIT = 20f81dd
+DOCKER_ENGINE_SITE = $(call github,moby,moby,v$(DOCKER_ENGINE_VERSION))
+
+DOCKER_ENGINE_SRC_SUBDIR = github.com/docker/docker
+DOCKER_ENGINE_WORKSPACE = vendor
 
 DOCKER_ENGINE_LICENSE = Apache-2.0
 DOCKER_ENGINE_LICENSE_FILES = LICENSE
@@ -13,12 +17,13 @@ DOCKER_ENGINE_LICENSE_FILES = LICENSE
 DOCKER_ENGINE_DEPENDENCIES = host-pkgconf
 DOCKER_ENGINE_SRC_SUBDIR = github.com/docker/docker
 
-DOCKER_ENGINE_LDFLAGS = \
-	-X main.GitCommit=$(DOCKER_ENGINE_VERSION) \
+DOCKER_ENGINE_LDFLAGS = -w -s \
+	-X main.GitCommit=$(DOCKER_ENGINE_GITCOMMIT) \
 	-X main.Version=$(DOCKER_ENGINE_VERSION)
 
-DOCKER_ENGINE_TAGS = cgo exclude_graphdriver_zfs autogen
-DOCKER_ENGINE_BUILD_TARGETS = cmd/dockerd
+DOCKER_ENGINE_TAGS = cgo exclude_graphdriver_zfs exclude_graphdriver_aufs autogen \
+	sqlite_omit_load_extension
+DOCKER_ENGINE_BUILD_TARGETS = docker
 
 ifeq ($(BR2_PACKAGE_LIBSECCOMP),y)
 DOCKER_ENGINE_TAGS += seccomp
@@ -29,6 +34,11 @@ ifeq ($(BR2_INIT_SYSTEMD),y)
 DOCKER_ENGINE_DEPENDENCIES += systemd
 DOCKER_ENGINE_TAGS += systemd journald
 endif
+
+ifeq ($(BR2_PACKAGE_DOCKER_ENGINE_DAEMON),y)
+DOCKER_ENGINE_TAGS += daemon
+endif
+
 ifeq ($(BR2_PACKAGE_DOCKER_ENGINE_EXPERIMENTAL),y)
 DOCKER_ENGINE_TAGS += experimental
 endif
@@ -55,8 +65,9 @@ DOCKER_ENGINE_INSTALL_BINS = $(notdir $(DOCKER_ENGINE_BUILD_TARGETS))
 
 define DOCKER_ENGINE_RUN_AUTOGEN
 	cd $(@D) && \
+		GITCOMMIT="$(DOCKER_ENGINE_GITCOMMIT)" \
 		BUILDTIME="$$(date)" \
-		VERSION="$(patsubst v%,%,$(DOCKER_ENGINE_VERSION))" \
+		VERSION="$(DOCKER_ENGINE_VERSION)" \
 		PKG_CONFIG="$(PKG_CONFIG_HOST_BINARY)" $(TARGET_MAKE_ENV) \
 		bash ./hack/make/.go-autogen
 endef
