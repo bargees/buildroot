@@ -20,8 +20,9 @@ ifeq ($(BR2_m68k_cf),y)
 # relocation truncated to fit: R_68K_GOT16O
 LIBOPENSSL_CFLAGS += -mxgot
 # resolves an assembler "out of range error" with blake2 and sha512 algorithms
-LIBOPENSSL_CFLAGS += -DOPENSSL_SMALL_FOOTPRINT
+# LIBOPENSSL_CFLAGS += -DOPENSSL_SMALL_FOOTPRINT
 endif
+LIBOPENSSL_CFLAGS += -DOPENSSL_SMALL_FOOTPRINT
 
 ifeq ($(BR2_USE_MMU),)
 LIBOPENSSL_CFLAGS += -DHAVE_FORK=0 -DOPENSSL_NO_MADVISE
@@ -108,6 +109,8 @@ define LIBOPENSSL_CONFIGURE_CMDS
 			no-fuzz-afl \
 			$(if $(BR2_STATIC_LIBS),zlib,zlib-dynamic) \
 			$(if $(BR2_STATIC_LIBS),no-dso) \
+			no-err \
+			no-filenames \
 	)
 	$(SED) "s#-march=[-a-z0-9] ##" -e "s#-mcpu=[-a-z0-9] ##g" $(@D)/Makefile
 	$(SED) "s#-O[0-9s]#$(LIBOPENSSL_CFLAGS)#" $(@D)/Makefile
