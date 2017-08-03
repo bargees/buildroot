@@ -67,7 +67,7 @@ NCURSES_TERMINFO_FILES = \
 	x/xterm+256color \
 	x/xterm-256color \
 	x/xterm-color \
-	x/xterm-xfree86 \
+	x/xterm-xfree86
 
 ifeq ($(BR2_PACKAGE_NCURSES_WCHAR),y)
 NCURSES_CONF_OPTS += --enable-widec
