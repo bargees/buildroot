@@ -16,7 +16,8 @@ OPENSSH_CONF_OPTS = \
 	--disable-utmpx \
 	--disable-wtmp \
 	--disable-wtmpx \
-	--disable-strip
+	--disable-strip \
+	--with-default-path=/usr/sbin:/sbin:/opt/bin:/usr/bin:/bin
 
 define OPENSSH_USERS
 	sshd -1 sshd -1 * - - - SSH drop priv user
