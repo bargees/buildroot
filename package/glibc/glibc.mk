@@ -9,8 +9,8 @@ GLIBC_VERSION =  arc-2018.03-release
 GLIBC_SITE = $(call github,foss-for-synopsys-dwc-arc-processors,glibc,$(GLIBC_VERSION))
 else
 # Generate version string using:
-#   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master
-GLIBC_VERSION = glibc-2.28-69-g1e5c5303a522764d7e9d2302a60e4a32cdb902f1
+#   git describe --match 'glibc-*' --abbrev=40 origin/release/2.25/master
+GLIBC_VERSION = 6b95c49d8e2b0bea8b2edcf13827e37e477fb19e
 # Upstream doesn't officially provide an https download link.
 # There is one (https://sourceware.org/git/glibc.git) but it's not reliable,
 # sometimes the connection times out. So use an unofficial github mirror.
