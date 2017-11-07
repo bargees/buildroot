@@ -12,8 +12,8 @@ GLIBC_VERSION = 4e2943456e690d89f48e6e710757dd09404b0c9a
 GLIBC_SITE = $(call github,riscv,riscv-glibc,$(GLIBC_VERSION))
 else
 # Generate version string using:
-#   git describe --match 'glibc-*' --abbrev=40 origin/release/MAJOR.MINOR/master
-GLIBC_VERSION = glibc-2.28-94-g4aeff335ca19286ee2382d8eba794ae5fd49281a
+#   git describe --match 'glibc-*' --abbrev=40 origin/release/2.25/master
+GLIBC_VERSION = aa6e76758202dc45b2435ddba9c3625a7d069491
 # Upstream doesn't officially provide an https download link.
 # There is one (https://sourceware.org/git/glibc.git) but it's not reliable,
 # sometimes the connection times out. So use an unofficial github mirror.
