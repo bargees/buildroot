@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-DUMB_INIT_VERSION = v1.2.0
+DUMB_INIT_VERSION = v1.2.1
 DUMB_INIT_SITE = $(call github,Yelp,dumb-init,$(DUMB_INIT_VERSION))
 DUMB_INIT_LICENSE = MIT
 DUMB_INIT_LICENSE_FILES = LICENSE
