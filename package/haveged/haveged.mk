@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-HAVEGED_VERSION = 1.9.1
+HAVEGED_VERSION = 1.9.2
 HAVEGED_SITE = http://www.issihosts.com/haveged
 HAVEGED_LICENSE = GPL-3.0+
 HAVEGED_LICENSE_FILES = COPYING
